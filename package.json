@@ -1,0 +1,97 @@
+{
+  "name": "claudecode-quota-monitor",
+  "displayName": "ClaudeCode Quota",
+  "description": "A premium, dashboard-style quota monitor for Claude Code.",
+  "version": "0.1.1",
+  "publisher": "yukimatsumori",
+  "icon": "assets/icon.svg",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1"
+  },
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "claudeQuota.open",
+        "title": "Open ClaudeCode Quota",
+        "category": "Claude Code"
+      }
+    ],
+    "configuration": {
+      "title": "ClaudeCode Quota",
+      "properties": {
+        "claudeQuota.updateInterval": {
+          "type": "number",
+          "default": 30000,
+          "description": "Interval in milliseconds to update quota stats."
+        },
+        "claudeQuota.statusBarFormat": {
+          "type": "string",
+          "enum": ["percentage", "percentage-with-icon", "percentage-with-progress", "countdown", "full"],
+          "default": "percentage-with-progress",
+          "description": "Status bar display format",
+          "enumDescriptions": [
+            "Show only percentage (e.g., '75%')",
+            "Show icon and percentage (e.g., '● 75%')",
+            "Show icon, percentage and progress bar (e.g., '● 75% ████░░░')",
+            "Show countdown to reset (e.g., '2h 30m')",
+            "Show full details (e.g., '● 75% → 2h 30m')"
+          ]
+        },
+        "claudeQuota.warningThreshold": {
+          "type": "number",
+          "default": 30,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage threshold for warning status (yellow indicator)."
+        },
+        "claudeQuota.dangerThreshold": {
+          "type": "number",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage threshold for danger status (red indicator)."
+        },
+        "claudeQuota.enableNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable notification alerts when quota is low."
+        },
+        "claudeQuota.notificationThreshold": {
+          "type": "number",
+          "default": 30,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage threshold for low quota notifications."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "jest",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/vsce": "^2.32.0",
+    "eslint": "^8.57.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.4.5"
+  }
+}

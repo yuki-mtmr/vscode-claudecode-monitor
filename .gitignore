@@ -1,0 +1,22 @@
+# Build outputs
+dist/
+*.vsix
+
+# Dependencies
+node_modules/
+
+# Development files (exclude from repository)
+HANDOVER_INSTRUCTIONS.md
+.serena/
+
+# IDE files
+.vscode-test/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
