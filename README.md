@@ -9,8 +9,8 @@ This extension monitors Claude Code quota within VS Code, providing visual feedb
 ## Key Features
 
 ### 📊 Real-time Monitoring
-- **Status bar display** with customizable formats (6 options)
-- **Visual dashboard** with glassmorphism design
+- **Status bar display** with customizable formats (5 options)
+- **Visual dashboard** with modern card design
 - **Progress bars** and countdown timers
 - **Active model detection** (Sonnet 4.5, Opus 4.5, Haiku 4.5)
 
@@ -125,24 +125,24 @@ Then ask Claude:
 | Feature | ClaudeCode Quota Monitor | Other Extensions |
 |---------|-------------------------|------------------|
 | No API Key Required | ✅ | ❌ |
-| Multiple Display Formats | ✅ (6 formats) | ⚠️ Limited |
+| Multiple Display Formats | ✅ (5 formats) | ⚠️ Limited |
 | Configurable Thresholds | ✅ | ⚠️ Limited |
 | Active Model Detection | ✅ | ❌ |
 | MCP Server Integration | ✅ | ❌ |
 | Cross-Platform Support | ✅ | ⚠️ Partial |
-| Dashboard UI | ✅ (Glassmorphism) | ⚠️ Basic |
+| Dashboard UI | ✅ (Modern Card) | ⚠️ Basic |
 
 ## Development
 
 ### Project Structure
 ```
 src/
-├── extension.ts              # Entry point
+├── extension.ts          # Entry point & status bar
+├── mcp-server.ts         # MCP server for Claude Code integration
 ├── services/
-│   └── quota-service.ts      # Core logic (log parsing)
+│   └── quota-service.ts  # Core logic (log parsing, quota calculation)
 └── webview/
-    ├── dashboard-panel.ts    # Dashboard UI
-    └── dashboard-provider.ts # Dashboard provider
+    └── dashboard-panel.ts # Dashboard webview UI
 ```
 
 ### Build Commands
