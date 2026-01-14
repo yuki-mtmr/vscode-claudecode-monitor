@@ -8,6 +8,7 @@ node_modules/
 # Development files (exclude from repository)
 HANDOVER_INSTRUCTIONS.md
 .serena/
+.claude/
 
 # IDE files
 .vscode-test/
