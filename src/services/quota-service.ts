@@ -131,13 +131,20 @@ export class QuotaService {
 
     // Public for testing
     public normalizeProjectPath(projectRoot: string): string {
-        // Convert to safe name:
-        // Mac/Linux: /Users/foo/bar -> -Users-foo-bar
-        // Windows: C:\Users\foo -> -C-Users-foo (assuming similar logic in Claude CLI)
-        // Replacing both / and \ with - for cross-platform safety
-        let safeName = projectRoot.replace(/[\\/]/g, '-');
+        // Convert to safe name for both Windows and Mac/Linux
+        // Windows: C:\Users\foo -> -C-Users-foo
+        // Mac/Linux: /Users/foo -> -Users-foo
 
-        // Ensure logic matches Claude CLI (which seems to prepend - on Mac if absolute path starts with /)
+        let safeName = projectRoot;
+
+        // 1. Handle Windows Drive Letters (e.g., "C:")
+        // Should likely become part of the path, e.g. "-C"
+        safeName = safeName.replace(/^([a-zA-Z]):/, '$1');
+
+        // 2. Replace all Path Separators (\ and /) and Colons with -
+        safeName = safeName.replace(/[\\/:]/g, '-');
+
+        // 3. Ensure it starts with - (Claude CLI convention seems to be prepending - to absolute paths)
         if (!safeName.startsWith('-')) safeName = '-' + safeName;
 
         return safeName;
@@ -276,7 +283,7 @@ export class QuotaService {
                     for (let i = lines.length - 1; i >= 0; i--) {
                         if (!lines[i].trim()) continue;
                         try {
-                            const entry = JSON.parse(lines[i]);
+                            const entry = JSON.parse(lines[i].trim());
 
                             // Normalize timestamp
                             let tx = 0;
